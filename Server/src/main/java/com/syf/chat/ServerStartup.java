@@ -9,17 +9,15 @@ public class ServerStartup {
         start(createBrokerController(args));
     }
 
-    public static ServerController start(ServerController controller) {
+    public static void start(ServerController controller) {
         try {
             //当JVM准备关闭时，NamesrvController的shutdown方法将被调用，安全地关闭 NameServer 的所有相关组件和资源
             Runtime.getRuntime().addShutdownHook(new Thread(controller::shutdown));
             controller.start();
-            return controller;
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(-1);
         }
-        return null;
     }
 
     private static ServerController createBrokerController(String[] args) {

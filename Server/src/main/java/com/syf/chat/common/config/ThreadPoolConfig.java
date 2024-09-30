@@ -4,6 +4,9 @@ import com.syf.chat.thread.CustomThreadFactory;
 
 import java.util.concurrent.*;
 
+/**
+ * 线程池配置类
+ */
 public class ThreadPoolConfig {
     private int corePoolSize = 10;              // 核心线程池大小
 

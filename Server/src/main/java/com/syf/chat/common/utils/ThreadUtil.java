@@ -4,6 +4,9 @@ import com.syf.chat.common.config.ThreadPoolConfig;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * 线程工具类
+ */
 public class ThreadUtil {
     public static ThreadPoolExecutor createThreadPool(ThreadPoolConfig config) {
         return new ThreadPoolExecutor(

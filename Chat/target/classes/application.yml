@@ -1,0 +1,23 @@
+server:
+    port: 8080
+
+spring:
+    application:
+        name: Chat
+    datasource:
+        url: jdbc:mysql://114.55.235.0:3306/CHAT
+        username: root
+        password: 1234
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        hikari:
+            minimum-idle: 5
+            maximum-pool-size: 15
+            idle-timeout: 60000  # 1 分钟
+            max-lifetime: 1800000 # 30 分钟
+            connection-timeout: 20000 # 20 秒
+# MyBatis Plus 的配置
+mybatis-plus:
+    configuration:
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # mybatis 配置文件的路径
+    # config-location: "classpath:mybatis/mybatis.config"

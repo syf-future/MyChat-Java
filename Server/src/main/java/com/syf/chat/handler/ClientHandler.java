@@ -19,7 +19,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread() + "开始处理");
+        System.out.println(Thread.currentThread().getName() + "开始处理");
         try (
                 InputStream input = socket.getInputStream();
                 PrintWriter output = new PrintWriter(socket.getOutputStream(), true);

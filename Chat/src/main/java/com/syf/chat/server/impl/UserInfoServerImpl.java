@@ -2,6 +2,7 @@ package com.syf.chat.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.syf.chat.common.enums.EnumReturnStatus;
+import com.syf.chat.common.utils.SequenceTool;
 import com.syf.chat.entity.dto.R;
 import com.syf.chat.entity.model.UserInfoDo;
 import com.syf.chat.entity.vo.LoginVo;
@@ -62,7 +63,7 @@ public class UserInfoServerImpl implements UserInfoServer {
             return R.fail(EnumReturnStatus.USER_EXIST);
         }
         UserInfoDo userInfoDo = new UserInfoDo();
-        userInfoDo.setSerialNo(registerVo.getAccount());// TODO:生成序列号
+        userInfoDo.setSerialNo(SequenceTool.nextId());
         userInfoDo.setAccount(registerVo.getAccount());
         userInfoDo.setPassword(registerVo.getPassword());
         userInfoDo.setPhone(registerVo.getPhone());

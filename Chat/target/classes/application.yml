@@ -8,13 +8,12 @@ spring:
         url: jdbc:mysql://114.55.235.0:3306/CHAT
         username: root
         password: 1234
+        type: com.alibaba.druid.pool.DruidDataSource  # 指定 Druid 作为数据源
         driver-class-name: com.mysql.cj.jdbc.Driver
-        hikari:
-            minimum-idle: 5
-            maximum-pool-size: 15
-            idle-timeout: 60000  # 1 分钟
-            max-lifetime: 1800000 # 30 分钟
-            connection-timeout: 20000 # 20 秒
+
+#logging:
+#    level:
+#        com.zaxxer.hikari: DEBUG
 # MyBatis Plus 的配置
 mybatis-plus:
     configuration:

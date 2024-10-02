@@ -1,5 +1,8 @@
 package com.syf.chat.common.enums;
 
+/**
+ * 返回状态码
+ */
 public enum EnumReturnStatus {
     SUCCESS("200", "成功"),
     ERROR("500", "系统异常"),

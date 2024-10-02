@@ -9,11 +9,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户信息表
+ * 好友关系表
  */
 @Data
-@TableName("USER_INFO")
-public class UserInfoDo implements Serializable {
+@TableName("FRIEND_SHIPS")
+public class FriendShipsDo implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -23,25 +23,25 @@ public class UserInfoDo implements Serializable {
     @TableId
     private String serialNo;
     /**
-     * 账号
+     * 发起用户号
      */
-    private String account;
+    private String UserId;
     /**
-     * 用户名
+     * 好友用户号
      */
-    private String userName;
+    private String FriendId;
     /**
-     * 密码
+     * 群组id (好友时为空)
      */
-    private String password;
+    private String GroupId;
     /**
-     * 手机号
+     * 发送类型 FRIEND好友  GROUP群聊
      */
-    private String phone;
+    private String SendType;
     /**
-     * 头像
+     * 好友关系 0发起请求 1同意 2拒绝  EnumAddFriendState
      */
-    private String picture;
+    private String status;
     /**
      * 创建时间
      */

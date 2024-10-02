@@ -2,7 +2,6 @@ package com.syf.chat.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.syf.chat.common.enums.EnumAddState;
-import com.syf.chat.common.enums.EnumMessageType;
 import com.syf.chat.common.enums.EnumReturnStatus;
 import com.syf.chat.common.enums.EnumSendType;
 import com.syf.chat.common.utils.SequenceTool;
@@ -12,12 +11,13 @@ import com.syf.chat.entity.dto.R;
 import com.syf.chat.entity.model.FriendShipsDo;
 import com.syf.chat.entity.model.MessageInfoDo;
 import com.syf.chat.entity.model.UserInfoDo;
+import com.syf.chat.entity.vo.ClickFriendVo;
 import com.syf.chat.entity.vo.LoginVo;
 import com.syf.chat.entity.vo.RegisterVo;
 import com.syf.chat.mapper.FriendShipsMapper;
-import com.syf.chat.mapper.MessageInfoMapper;
 import com.syf.chat.mapper.UserInfoMapper;
 import com.syf.chat.server.UserInfoServer;
+import com.syf.chat.server.handler.MessageHandler;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -25,10 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -39,7 +37,7 @@ public class UserInfoServerImpl implements UserInfoServer {
     @Resource
     private FriendShipsMapper friendShipsMapper;
     @Resource
-    private MessageInfoMapper messageInfoMapper;
+    private MessageHandler messageHandler;
 
     /**
      * 用户登录
@@ -130,26 +128,18 @@ public class UserInfoServerImpl implements UserInfoServer {
         List<UserInfoDo> userInfoDos = userInfoMapper.selectList(wrapper);
         List<FriendInfoDto> friendInfoDtoList = new ArrayList<>();
         userInfoDos.forEach(userInfoDo -> {
-            LambdaQueryWrapper<MessageInfoDo> messageWrapper = new LambdaQueryWrapper<>();
-            messageWrapper.eq(MessageInfoDo::getSendType, EnumSendType.FRIEND.getCode())
-                    .eq(MessageInfoDo::getMessageType, EnumMessageType.TEXT.getCode())
-                    .and(wrappers -> wrappers
-                            // 我给好友发消息
-                            .eq(MessageInfoDo::getUserId, serialNo)
-                            .eq(MessageInfoDo::getFriendId, userInfoDo.getSerialNo())
-                            .or()
-                            //好友给我发消息
-                            .eq(MessageInfoDo::getUserId, userInfoDo.getSerialNo())
-                            .eq(MessageInfoDo::getFriendId, serialNo)
-                    ).orderByDesc(MessageInfoDo::getCreateTime) // 按照创建时间降序排列
-                    .last("LIMIT 1"); // 限制返回结果为1条记录;
-            MessageInfoDo messageInfoDo = messageInfoMapper.selectOne(messageWrapper);
             FriendInfoDto friendInfoDto = new FriendInfoDto();
+            ClickFriendVo clickFriendVo = new ClickFriendVo();
+            clickFriendVo.setUserId(serialNo);
+            clickFriendVo.setFriendId(userInfoDo.getSerialNo());
+            List<MessageInfoDo> messageInfoDos = messageHandler.getTextMessage(clickFriendVo);
+            if(!CollectionUtils.isEmpty(messageInfoDos)){
+                friendInfoDto.setLastMessage(messageInfoDos.get(0).getContent());
+                friendInfoDto.setLastMessageTime(messageInfoDos.get(0).getUpdateTime());
+            }
             friendInfoDto.setFriendId(userInfoDo.getSerialNo());
             friendInfoDto.setUserName(userInfoDo.getUserName());
             friendInfoDto.setPicture(userInfoDo.getPicture());
-            friendInfoDto.setLastMessage(messageInfoDo.getContent());
-            friendInfoDto.setLastMessageTime(messageInfoDo.getUpdateTime());
             friendInfoDtoList.add(friendInfoDto);
         });
         return R.ok(friendInfoDtoList);

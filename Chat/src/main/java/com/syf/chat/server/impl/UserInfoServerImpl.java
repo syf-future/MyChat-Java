@@ -120,8 +120,9 @@ public class UserInfoServerImpl implements UserInfoServer {
                         friendShipsDo.getUserId(),
                         friendShipsDo.getFriendId()
                 )) // 将 userId 和 friendId 转换为流
-                .filter(userId -> userId.equals(serialNo)) // 过滤出等于 serialNo 的值
+                .filter(userId -> !userId.equals(serialNo)) // 过滤出等于 serialNo 的值
                 .toList(); // 收集到 List<String> 中
+        log.info("共有{}个好友:{}",friendIds.size(),friendIds);
         log.info("开始构建好友信息");
         LambdaQueryWrapper<UserInfoDo> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(UserInfoDo::getSerialNo, friendIds);

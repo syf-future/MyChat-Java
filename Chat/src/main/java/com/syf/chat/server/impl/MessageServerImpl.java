@@ -46,12 +46,11 @@ public class MessageServerImpl implements MessageServer {
 
     /**
      * 发送消息
-     * @param message 消息
+     * @param messageInfoDo 消息
      * @return        bool
      */
     @Override
-    public R sendMessage(Message message) {
-        MessageInfoDo messageInfoDo = message.getData();
+    public R sendMessage(MessageInfoDo messageInfoDo) {
         messageInfoDo.setSerialNo(SequenceTool.nextId());
         messageInfoDo.setCreateTime(new Date());
         messageInfoDo.setUpdateTime(new Date());

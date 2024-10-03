@@ -24,23 +24,23 @@ public class MessageInfoDo implements Serializable {
     /**
      * 发送者ID
      */
-    private String UserId;
+    private String userId;
     /**
      * 接收者id (群聊时为空)
      */
-    private String FriendId;
+    private String friendId;
     /**
      * 群组id (好友时为空)
      */
-    private String GroupId;
+    private String groupId;
     /**
      * 发送类型 FRIEND好友  GROUP群聊
      */
-    private String SendType;
+    private String sendType;
     /**
      * 消息类型  'text':文本, 'image':图片, 'file':文件, 'video':视频, 'audio':音频
      */
-    private String MessageType;
+    private String messageType;
     /**
      * 内容
      */

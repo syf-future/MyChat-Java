@@ -2,7 +2,7 @@ package com.syf.chat.server;
 
 import com.syf.chat.entity.dto.MessageInfoDto;
 import com.syf.chat.entity.dto.R;
-import com.syf.chat.entity.model.Message;
+import com.syf.chat.entity.model.MessageInfoDo;
 import com.syf.chat.entity.vo.ClickFriendVo;
 
 import java.util.List;
@@ -17,8 +17,8 @@ public interface MessageServer {
 
     /**
      * 发送消息
-     * @param message 消息
+     * @param messageInfoDo 消息
      * @return        bool
      */
-    R sendMessage(Message message);
+    R sendMessage(MessageInfoDo messageInfoDo);
 }

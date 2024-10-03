@@ -37,7 +37,7 @@ public class FriendShipsDo implements Serializable {
     /**
      * 发送类型 FRIEND好友  GROUP群聊
      */
-    private String SendType;
+    private String sendType;
     /**
      * 好友关系 0发起请求 1同意 2拒绝  EnumAddFriendState
      */

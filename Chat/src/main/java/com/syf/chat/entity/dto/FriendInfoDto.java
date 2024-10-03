@@ -14,7 +14,7 @@ public class FriendInfoDto implements Serializable {
     /**
      * 好友流水号
      */
-    private String FriendId;
+    private String friendId;
     /**
      * 用户名
      */

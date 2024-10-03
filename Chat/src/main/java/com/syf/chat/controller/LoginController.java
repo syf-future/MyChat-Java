@@ -11,6 +11,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/chat/user")
@@ -20,7 +21,6 @@ public class LoginController {
 
     /**
      * 用户登录
-     *
      * @param loginVo 登录信息
      * @return 用户信息
      */
@@ -31,7 +31,6 @@ public class LoginController {
 
     /**
      * 新用户注册
-     *
      * @param registerVo 登录信息
      * @return 用户信息
      */
@@ -43,11 +42,11 @@ public class LoginController {
     /**
      * 登录成功事件
      *
-     * @param SerialNo 用户信息流水号
+     * @param serialNoMap 用户信息流水号
      * @return 好友信息
      */
     @PostMapping("/loginSuccess")
-    public R<List<FriendInfoDto>> loginSuccess(@RequestBody String SerialNo) {
-        return userInfoServer.loginSuccess(SerialNo);
+    public R<List<FriendInfoDto>> loginSuccess(@RequestBody Map<String, String> serialNoMap) {
+        return userInfoServer.loginSuccess(serialNoMap.get("serialNo"));
     }
 }

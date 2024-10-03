@@ -36,7 +36,7 @@ public class MessageHandler {
                         //好友给我发消息
                         .eq(MessageInfoDo::getUserId, clickFriendVo.getFriendId())
                         .eq(MessageInfoDo::getFriendId, clickFriendVo.getUserId())
-                ).orderByDesc(MessageInfoDo::getCreateTime); // 按照创建时间降序排列
+                ).orderByAsc(MessageInfoDo::getCreateTime); // 按照创建时间降序排列
         return messageInfoMapper.selectList(messageWrapper);
     }
     /**

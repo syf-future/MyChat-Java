@@ -17,5 +17,5 @@ public class ClickFriendVo implements Serializable {
     /**
      * 接收者id (群聊时为空)
      */
-    private String FriendId;
+    private String friendId;
 }

@@ -3,6 +3,7 @@ package com.syf.chat.controller;
 import com.syf.chat.entity.dto.MessageInfoDto;
 import com.syf.chat.entity.dto.R;
 import com.syf.chat.entity.model.Message;
+import com.syf.chat.entity.model.MessageInfoDo;
 import com.syf.chat.entity.vo.ClickFriendVo;
 import com.syf.chat.server.MessageServer;
 import jakarta.annotation.Resource;
@@ -31,7 +32,7 @@ public class MessageController {
      * 发送消息
      */
     @PostMapping("/send")
-    public R sendMessage(@RequestBody Message message) {
-        return messageServer.sendMessage(message);
+    public R sendMessage(@RequestBody MessageInfoDo messageInfoDo) {
+        return messageServer.sendMessage(messageInfoDo);
     }
 }

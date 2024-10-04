@@ -65,5 +65,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         System.out.println("客户端已断开连接: " + session.getId());
+
+        // 从 socketMap 中移除断开的 session
+        socketMap.entrySet().removeIf(entry -> entry.getValue().getId().equals(session.getId()));
+
+        System.out.println("已移除断开连接的客户端: " + session.getId());
     }
 }

@@ -2,6 +2,7 @@ package com.syf.chat.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.syf.chat.common.enums.EnumAddState;
+import com.syf.chat.common.enums.EnumLoginState;
 import com.syf.chat.common.enums.EnumReturnStatus;
 import com.syf.chat.common.enums.EnumSendType;
 import com.syf.chat.common.utils.SequenceTool;
@@ -11,11 +12,13 @@ import com.syf.chat.entity.dto.R;
 import com.syf.chat.entity.model.FriendShipsDo;
 import com.syf.chat.entity.model.MessageInfoDo;
 import com.syf.chat.entity.model.UserInfoDo;
+import com.syf.chat.entity.model.UserOperateDo;
 import com.syf.chat.entity.vo.ClickFriendVo;
 import com.syf.chat.entity.vo.LoginVo;
 import com.syf.chat.entity.vo.RegisterVo;
 import com.syf.chat.mapper.FriendShipsMapper;
 import com.syf.chat.mapper.UserInfoMapper;
+import com.syf.chat.mapper.UserOperateMapper;
 import com.syf.chat.server.UserInfoServer;
 import com.syf.chat.server.handler.MessageHandler;
 import jakarta.annotation.Resource;
@@ -27,6 +30,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -38,6 +42,8 @@ public class UserInfoServerImpl implements UserInfoServer {
     private FriendShipsMapper friendShipsMapper;
     @Resource
     private MessageHandler messageHandler;
+    @Resource
+    private UserOperateMapper userOperateMapper;
 
     /**
      * 用户登录
@@ -90,6 +96,14 @@ public class UserInfoServerImpl implements UserInfoServer {
         userInfoDo.setUserName(registerVo.getAccount());
         userInfoDo.setCreateTime(new Date());
         userInfoDo.setUpdateTime(new Date());
+
+        UserOperateDo userOperateDo = new UserOperateDo();
+        userOperateDo.setSerialNo(userInfoDo.getSerialNo());
+        userOperateDo.setLoginState(EnumLoginState.UN_LOGIN.getCode());
+        userOperateDo.setOperateState("0");
+        userOperateDo.setCreateTime(new Date());
+        userOperateDo.setUpdateTime(new Date());
+        userOperateMapper.insert(userOperateDo);
         userInfoMapper.insert(userInfoDo);
         return R.ok(true);
     }
@@ -102,6 +116,11 @@ public class UserInfoServerImpl implements UserInfoServer {
      */
     @Override
     public R<List<FriendInfoDto>> loginSuccess(String serialNo) {
+        UserOperateDo userOperateDo = new UserOperateDo();
+        userOperateDo.setSerialNo(serialNo);
+        userOperateDo.setLoginState(EnumLoginState.LOGIN.getCode());
+        userOperateDo.setUpdateTime(new Date());
+        userOperateMapper.updateById(userOperateDo);
         log.info("开始查询用户：{} 的好友", serialNo);
         LambdaQueryWrapper<FriendShipsDo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(FriendShipsDo::getSendType, EnumSendType.FRIEND.getCode())
@@ -109,7 +128,7 @@ public class UserInfoServerImpl implements UserInfoServer {
                 .and(wrapper -> wrapper.eq(FriendShipsDo::getUserId, serialNo)
                         .or()
                         .eq(FriendShipsDo::getFriendId, serialNo))
-                .orderByDesc(FriendShipsDo::getUpdateTime);
+                .orderByAsc(FriendShipsDo::getUpdateTime);
         List<FriendShipsDo> friendShipsDos = friendShipsMapper.selectList(queryWrapper);
         if (CollectionUtils.isEmpty(friendShipsDos)) {
             log.info("{}用户好友为空", serialNo);
@@ -134,9 +153,16 @@ public class UserInfoServerImpl implements UserInfoServer {
             clickFriendVo.setUserId(serialNo);
             clickFriendVo.setFriendId(userInfoDo.getSerialNo());
             List<MessageInfoDo> messageInfoDos = messageHandler.getTextMessage(clickFriendVo);
+            friendInfoDto.setUnreadNum(String.valueOf(0));
             if(!CollectionUtils.isEmpty(messageInfoDos)){
-                friendInfoDto.setLastMessage(messageInfoDos.get(0).getContent());
-                friendInfoDto.setLastMessageTime(messageInfoDos.get(0).getUpdateTime());
+                int num = messageInfoDos.stream()
+                        .filter(messageInfoDo -> messageInfoDo.getFriendId().equals(serialNo)  // friendId 与 serialNo 相等
+                                && messageInfoDo.getIsRead().equals("0"))        // isRead 为 "0"
+                        .toList().size();
+                friendInfoDto.setUnreadNum(String.valueOf(num));
+                //获取最后一天信息
+                friendInfoDto.setLastMessage(messageInfoDos.get(messageInfoDos.size()-1).getContent());
+                friendInfoDto.setLastMessageTime(messageInfoDos.get(messageInfoDos.size()-1).getUpdateTime());
             }
             friendInfoDto.setFriendId(userInfoDo.getSerialNo());
             friendInfoDto.setUserName(userInfoDo.getUserName());

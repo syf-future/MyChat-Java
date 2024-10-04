@@ -1,5 +1,6 @@
 package com.syf.chat.entity.dto;
 
+import com.syf.chat.common.enums.EnumSendType;
 import lombok.Data;
 
 import java.io.Serial;
@@ -24,6 +25,10 @@ public class FriendInfoDto implements Serializable {
      */
     private String picture;
     /**
+     * 发送的类型  FRIEND:好友  GROUP:群组
+     */
+    private String sendType = EnumSendType.FRIEND.getCode();
+    /**
      * 最后一条消息
      */
     private String lastMessage;
@@ -31,4 +36,8 @@ public class FriendInfoDto implements Serializable {
      * 最后一天消息时间
      */
     private Date lastMessageTime;
+    /**
+     * 未读的消息数量
+     */
+    private String unreadNum;
 }

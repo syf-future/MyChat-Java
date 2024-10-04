@@ -42,6 +42,10 @@ public class MessageInfoDo implements Serializable {
      */
     private String messageType;
     /**
+     * 消息接收者是否已读 0未读  1已读
+     */
+    private String isRead;
+    /**
      * 内容
      */
     private String content;

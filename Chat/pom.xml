@@ -43,11 +43,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.23</version>
         </dependency>
-        <!-- jdbc依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>
         <!-- MyBatis Plus依赖 -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -63,6 +58,10 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <excludes>
+                        <classifier>starter</classifier>
+                        <attach>false</attach>
+                        <mainClass>com.syf.chat.ChatApplication</mainClass>
+                        <finalName></finalName>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>

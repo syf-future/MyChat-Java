@@ -25,15 +25,15 @@ public class FriendShipsDo implements Serializable {
     /**
      * 发起用户号
      */
-    private String UserId;
+    private String userId;
     /**
      * 好友用户号
      */
-    private String FriendId;
+    private String friendId;
     /**
      * 群组id (好友时为空)
      */
-    private String GroupId;
+    private String groupId;
     /**
      * 发送类型 FRIEND好友  GROUP群聊
      */

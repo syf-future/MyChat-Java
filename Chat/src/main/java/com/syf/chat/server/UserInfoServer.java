@@ -30,4 +30,11 @@ public interface UserInfoServer {
      * @return
      */
     R<List<FriendInfoDto>> loginSuccess(String serialNo);
+
+    /**
+     * 退出登录
+     * @param serialNo  用户号
+     * @return          bool
+     */
+    R quitLogin(String serialNo);
 }

@@ -1,6 +1,7 @@
 package com.syf.chat.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.syf.chat.common.enums.EnumAddState;
 import com.syf.chat.common.enums.EnumLoginState;
 import com.syf.chat.common.enums.EnumReturnStatus;
@@ -170,5 +171,21 @@ public class UserInfoServerImpl implements UserInfoServer {
             friendInfoDtoList.add(friendInfoDto);
         });
         return R.ok(friendInfoDtoList);
+    }
+
+    /**
+     * 退出登录
+     * @param serialNo  用户号
+     * @return          bool
+     */
+    @Override
+    public R quitLogin(String serialNo) {
+        LambdaUpdateWrapper<UserOperateDo> queryWrapper = new LambdaUpdateWrapper<>();
+        queryWrapper.eq(UserOperateDo::getSerialNo, serialNo)
+                .set(UserOperateDo::getLoginState, EnumLoginState.UN_LOGIN.getCode())
+                .set(UserOperateDo::getOperateState, "0")
+                .set(UserOperateDo::getUpdateTime, new Date());
+        int update = userOperateMapper.update(queryWrapper);
+        return R.ok();
     }
 }

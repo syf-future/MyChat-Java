@@ -49,4 +49,13 @@ public class LoginController {
     public R<List<FriendInfoDto>> loginSuccess(@RequestBody Map<String, String> serialNoMap) {
         return userInfoServer.loginSuccess(serialNoMap.get("serialNo"));
     }
+
+    /**
+     * 退出登录
+     * @param serialNoMap 用户信息流水号
+     */
+    @PostMapping("/quit")
+    public R quitLogin(@RequestBody Map<String, String> serialNoMap) {
+        return userInfoServer.quitLogin(serialNoMap.get("serialNo"));
+    }
 }

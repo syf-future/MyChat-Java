@@ -97,6 +97,7 @@ public class UserInfoServerImpl implements UserInfoServer {
         userInfoDo.setUserName(registerVo.getAccount());
         userInfoDo.setCreateTime(new Date());
         userInfoDo.setUpdateTime(new Date());
+        userInfoDo.setPicture("https://img.taotu.cn/ssd/ssd4/1/2024-05-22/1_17016f181bfb186bb2a9db77a13415e0.jpg");
 
         UserOperateDo userOperateDo = new UserOperateDo();
         userOperateDo.setSerialNo(userInfoDo.getSerialNo());

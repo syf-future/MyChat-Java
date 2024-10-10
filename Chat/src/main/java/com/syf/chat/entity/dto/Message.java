@@ -1,5 +1,6 @@
-package com.syf.chat.entity.model;
+package com.syf.chat.entity.dto;
 
+import com.syf.chat.entity.model.MessageInfoDo;
 import lombok.Data;
 
 import java.io.Serial;

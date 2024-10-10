@@ -2,7 +2,6 @@ package com.syf.chat.controller;
 
 import com.syf.chat.entity.dto.MessageInfoDto;
 import com.syf.chat.entity.dto.R;
-import com.syf.chat.entity.model.Message;
 import com.syf.chat.entity.model.MessageInfoDo;
 import com.syf.chat.entity.vo.ClickFriendVo;
 import com.syf.chat.server.MessageServer;

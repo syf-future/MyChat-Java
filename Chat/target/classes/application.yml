@@ -1,15 +1,16 @@
 server:
     port: 8080
-
 spring:
+    profiles:
+        include: dev
     application:
         name: Chat
-    datasource:
-        url: jdbc:mysql://114.55.235.0:3306/CHAT
-        username: root
-        password: 1234
-        type: com.alibaba.druid.pool.DruidDataSource  # 指定 Druid 作为数据源
-        driver-class-name: com.mysql.cj.jdbc.Driver
+#    datasource:
+#        url: jdbc:mysql://114.55.235.0:3306/Chat
+#        username: root
+#        password: 1234
+#        type: com.alibaba.druid.pool.DruidDataSource  # 指定 Druid 作为数据源
+#        driver-class-name: com.mysql.cj.jdbc.Driver
 
 #logging:
 #    level:

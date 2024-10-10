@@ -48,4 +48,19 @@
             <version>2.11.0</version> <!-- 使用最新版本 -->
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <classifier>starter</classifier>
+                    <attach>false</attach>
+                    <mainClass>com.syf.chat.ServerApplication</mainClass>
+                    <finalName>server-system</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

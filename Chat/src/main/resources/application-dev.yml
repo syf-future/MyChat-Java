@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/Chat
+    username: root
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource  # 指定 Druid 作为数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver

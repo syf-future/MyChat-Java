@@ -6,6 +6,7 @@ import com.syf.chat.entity.dto.R;
 import com.syf.chat.entity.model.UserInfoDo;
 import com.syf.chat.entity.vo.LoginVo;
 import com.syf.chat.entity.vo.RegisterVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

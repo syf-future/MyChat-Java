@@ -1,7 +1,15 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/Chat
+    url: jdbc:mysql://localhost:3306/chat
     username: root
     password: 1234
     type: com.alibaba.druid.pool.DruidDataSource  # 指定 Druid 作为数据源
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+upload:
+  url: http://114.55.235.0:80           # 文件上传的服务器IP
+  file:
+    image:
+      profile:
+        address: /file/image/profile/       # 头像请求url http://114.55.235.0:80/file/image/profile/
+        path: /app/resources/image/profile/ # 头像存储路径

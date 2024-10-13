@@ -27,11 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 import java.util.stream.Stream;
 
 @Service
@@ -143,7 +139,7 @@ public class UserInfoServerImpl implements UserInfoServer {
                 )) // 将 userId 和 friendId 转换为流
                 .filter(userId -> !userId.equals(serialNo)) // 过滤出等于 serialNo 的值
                 .toList(); // 收集到 List<String> 中
-        log.info("共有{}个好友:{}",friendIds.size(),friendIds);
+        log.info("共有{}个好友:{}", friendIds.size(), friendIds);
         log.info("开始构建好友信息");
         LambdaQueryWrapper<UserInfoDo> wrapper = new LambdaQueryWrapper<>();
         wrapper.in(UserInfoDo::getSerialNo, friendIds);
@@ -156,15 +152,15 @@ public class UserInfoServerImpl implements UserInfoServer {
             clickFriendVo.setFriendId(userInfoDo.getSerialNo());
             List<MessageInfoDo> messageInfoDos = messageHandler.getTextMessage(clickFriendVo);
             friendInfoDto.setUnreadNum(String.valueOf(0));
-            if(!CollectionUtils.isEmpty(messageInfoDos)){
+            if (!CollectionUtils.isEmpty(messageInfoDos)) {
                 int num = messageInfoDos.stream()
                         .filter(messageInfoDo -> messageInfoDo.getFriendId().equals(serialNo)  // friendId 与 serialNo 相等
                                 && messageInfoDo.getIsRead().equals("0"))        // isRead 为 "0"
                         .toList().size();
                 friendInfoDto.setUnreadNum(String.valueOf(num));
                 //获取最后一天信息
-                friendInfoDto.setLastMessage(messageInfoDos.get(messageInfoDos.size()-1).getContent());
-                friendInfoDto.setLastMessageTime(messageInfoDos.get(messageInfoDos.size()-1).getUpdateTime());
+                friendInfoDto.setLastMessage(messageInfoDos.get(messageInfoDos.size() - 1).getContent());
+                friendInfoDto.setLastMessageTime(messageInfoDos.get(messageInfoDos.size() - 1).getUpdateTime());
             }
             friendInfoDto.setFriendId(userInfoDo.getSerialNo());
             friendInfoDto.setUserName(userInfoDo.getUserName());
@@ -176,8 +172,9 @@ public class UserInfoServerImpl implements UserInfoServer {
 
     /**
      * 退出登录
-     * @param serialNo  用户号
-     * @return          bool
+     *
+     * @param serialNo 用户号
+     * @return bool
      */
     @Override
     public R quitLogin(String serialNo) {

@@ -13,3 +13,12 @@ upload:
       profile:
         address: /file/image/profile/       # 头像请求url http://114.55.235.0:80/file/image/profile/
         path: /app/resources/image/profile/ # 头像存储路径
+# 设置全局日志级别为 TRACE，记录所有日志
+logging:
+  level:
+    root: INFO         #记录所有日志   INFO、WARN、ERROR、DEBUG
+  file:
+    name: /app/loan/java/loan-chat/logs/loan-chat.log  # 日志输出位置
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB

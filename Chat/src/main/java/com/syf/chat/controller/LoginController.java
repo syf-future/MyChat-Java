@@ -3,19 +3,15 @@ package com.syf.chat.controller;
 import com.syf.chat.entity.dto.FriendInfoDto;
 import com.syf.chat.entity.dto.LoginDto;
 import com.syf.chat.entity.dto.R;
-import com.syf.chat.entity.model.UserInfoDo;
 import com.syf.chat.entity.vo.LoginVo;
 import com.syf.chat.entity.vo.RegisterVo;
 import com.syf.chat.server.UserInfoServer;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping("/chat/user")
 public class LoginController {

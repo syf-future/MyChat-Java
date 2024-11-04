@@ -40,6 +40,12 @@
             <artifactId>gson</artifactId>
             <version>2.11.0</version> <!-- 使用最新版本 -->
         </dependency>
+        <!--    连接服务器依赖    -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,6 +1,5 @@
 package com.syf.chat.entity;
 
-import com.syf.chat.common.enums.EnumSendType;
 import lombok.Data;
 
 import java.io.Serial;

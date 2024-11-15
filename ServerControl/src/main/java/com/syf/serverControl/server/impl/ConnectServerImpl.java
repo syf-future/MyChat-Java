@@ -21,12 +21,12 @@ public class ConnectServerImpl implements ConnectServer {
      * 连接服务器
      */
     @Override
-    public R connectServer(ServerInfoVo serverInfoVo) {
+    public R<Object> connectServer(ServerInfoVo serverInfoVo) {
         if (serverControlHandler.checkConnect()) {
             log.info("服务器已连接");
             return R.ok();
         }
-        //当JVM准备关闭时 关闭服务器连接
+        // 当JVM准备关闭时 关闭服务器连接
         Runtime.getRuntime().addShutdownHook(new Thread(serverControlHandler::closeConnect));
         serverControlHandler.startConnect(serverInfoVo);
         CheckConnectHandler.CheckConnect().setEnumConnectStatus(EnumConnectStatus.CONNECTED);
@@ -37,7 +37,7 @@ public class ConnectServerImpl implements ConnectServer {
      * 断开服务器
      */
     @Override
-    public R disconnect() {
+    public R<Object> disconnect() {
         this.serverControlHandler.closeConnect();
         return R.ok();
     }
@@ -48,7 +48,7 @@ public class ConnectServerImpl implements ConnectServer {
      * @return
      */
     @Override
-    public R getEssentialInfo() {
+    public R<Object> getEssentialInfo() {
         if (serverControlHandler.checkConnect()) {
             if (!CheckConnectHandler.checkBasicsInfo()) {
                 serverControlHandler.getEssentialInfo();

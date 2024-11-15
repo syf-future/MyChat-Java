@@ -7,16 +7,15 @@ public interface ConnectServer {
     /**
      * 连接服务器
      */
-    R connectServer(ServerInfoVo serverInfoVo);
+    R<Object> connectServer(ServerInfoVo serverInfoVo);
 
     /**
      * 断开服务器
      */
-    R disconnect();
+    R<Object> disconnect();
 
     /**
      * 获取基本信息
-     * @return
      */
-    R getEssentialInfo();
+    R<Object> getEssentialInfo();
 }

@@ -27,5 +27,5 @@ public class CommandConstants {
     /**
      * 磁盘信息命令
      */
-    public static final String DF = "df -h";
+    public static final String  DF = "df -h";
 }

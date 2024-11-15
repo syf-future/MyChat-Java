@@ -22,7 +22,7 @@ public class ConnectController {
      * 连接服务器
      */
     @PostMapping("/connect")
-    private R connectServer(@RequestBody ServerInfoVo serverInfoVo) {
+    private R<Object> connectServer(@RequestBody ServerInfoVo serverInfoVo) {
         return connectServer.connectServer(serverInfoVo);
     }
 
@@ -30,7 +30,7 @@ public class ConnectController {
      * 获取服务器基本信息
      */
     @PostMapping("/getEssentialInfo")
-    private R getEssentialInfo() {
+    private R<Object> getEssentialInfo() {
         return connectServer.getEssentialInfo();
     }
 
@@ -38,7 +38,7 @@ public class ConnectController {
      * 断开服务器
      */
     @PostMapping("/disconnect")
-    private R disconnect() {
+    private R<Object> disconnect() {
         return connectServer.disconnect();
     }
 }
